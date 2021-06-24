@@ -6,7 +6,7 @@
 /*   By: stune <stune@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/04 20:11:48 by stune             #+#    #+#             */
-/*   Updated: 2021/06/22 19:41:17 by stune            ###   ########.fr       */
+/*   Updated: 2021/06/24 18:02:32 by stune            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,4 +45,12 @@ void	norm_correct(char *buf, char **tmp, int *i)
 		ft_strjchr(tmp, buf[*i]);
 	if (buf[*i] != BACKSLASH && buf[*i] != SEMICOLON && buf[*i] != SPACE)
 		(*i)++;
+}
+
+void	dup_and_close(t_cmd *cmd)
+{
+	dup2(cmd->du_p0, 0);
+	dup2(cmd->du_p1, 1);
+	close(cmd->du_p0);
+	close(cmd->du_p1);
 }

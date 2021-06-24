@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nmisfit <nmisfit@student.42.fr>            +#+  +:+       +#+        */
+/*   By: stune <stune@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/22 15:47:36 by nmisfit           #+#    #+#             */
-/*   Updated: 2021/06/22 20:16:08 by nmisfit          ###   ########.fr       */
+/*   Updated: 2021/06/22 20:08:53 by stune            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ void	check_flagc(void)
 
 	if (g_all->flag & FLAG_C)
 	{
-		update_exit_status(&(g_all->my_envp), 1);
 		g_all->flag = g_all->flag & ~(FLAG_C);
 		i = -1;
 		tail = ft_strdup(g_all->term->ptr);

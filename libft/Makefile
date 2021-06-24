@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: nmisfit <nmisfit@student.42.fr>            +#+  +:+       +#+         #
+#    By: stune <stune@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/11/04 15:43:31 by stune             #+#    #+#              #
-#    Updated: 2021/06/22 20:39:36 by nmisfit          ###   ########.fr        #
+#    Updated: 2021/06/23 21:17:11 by stune            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -61,7 +61,7 @@ B_SRC = ft_lstnew.c \
 
 B_OBJ = $(B_SRC:.c=.o)
 
-WFLAG = -Wall -Wextra -Werror
+WFLAG = -g
 
 .PHONY: all bonus $(NAME) clean fclean re
 

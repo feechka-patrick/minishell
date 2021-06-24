@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: nmisfit <nmisfit@student.42.fr>            +#+  +:+       +#+         #
+#    By: stune <stune@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/02/20 02:37:00 by stune             #+#    #+#              #
-#    Updated: 2021/06/22 20:39:37 by nmisfit          ###   ########.fr        #
+#    Updated: 2021/06/23 21:17:01 by stune            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -39,7 +39,7 @@ SRC =	main.c\
 OBJ = $(SRC:.c=.o)
 
 CC = gcc
-CFLAG = -Wall -Wextra -Werror
+CFLAG = -g
 LIB = libft.a
 LIB_PATH = libft/
 LIB_TERMCAP = -ltermcap

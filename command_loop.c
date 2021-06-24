@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   command_loop.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nmisfit <nmisfit@student.42.fr>            +#+  +:+       +#+        */
+/*   By: stune <stune@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/22 18:17:34 by stune             #+#    #+#             */
-/*   Updated: 2021/06/23 17:31:33 by nmisfit          ###   ########.fr       */
+/*   Updated: 2021/06/24 21:17:18 by stune            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void	dollar_sign_processing(char **envp, char *buf, int *i, char **tmp)
 		if (buf[*i] == DOLLAR)
 			dollar_sign_processing(envp, buf, i, tmp);
 		if (buf[*i] != DOLLAR && buf[*i] != APOSTROPHE \
-		&& buf[*i] != SPACE && buf[*i] != SEMICOLON)
+		&& buf[*i] != SPACE && buf[*i] != SEMICOLON && buf[*i] != QUOTE)
 			(*i)++;
 	}
 }
@@ -54,9 +54,9 @@ static int	get_arguments(char *buf, int *i, char **tmp, char **envp)
 	while (buf[*i] != 0 && buf[*i] != SPACE \
 	&& buf[*i] != SEMICOLON && buf[*i] != '\t')
 	{
+		if_quo_back_apos_pip(buf, tmp, envp, i);
 		if (if_redirect_in_buf(buf, i, tmp))
 			return (pipe_flag);
-		if_quo_back_apos_pip(buf, tmp, envp, i);
 		if (buf[*i] == DOLLAR)
 		{
 			dollar_sign_processing(envp, buf, i, tmp);
@@ -104,29 +104,24 @@ static char	**make_argv(t_list_operation *lst_s, char *tmp, char *buf, int i)
 void	cmd_loop(char *buf, char ***envp)
 {
 	t_cmd	*cmd;
-	int		i;
 
-	cmd = cmd_init();
-	i = 0;
-	while (buf[i] != 0)
+	cmd = cmd_init(buf);
+	while (buf[cmd->i] != 0)
 	{
 		cmd->tmp = NULL;
-		cmd->pipe_flag = get_arguments(buf, &i, &cmd->tmp, *envp);
-		cmd->my_av = make_argv(&cmd->lst_s, cmd->tmp, buf, i);
-		if (check_errors(buf, cmd->my_av, i))
+		cmd->pipe_flag = get_arguments(buf, &cmd->i, &cmd->tmp, *envp);
+		cmd->my_av = make_argv(&cmd->lst_s, cmd->tmp, buf, cmd->i);
+		if (check_errors(buf, cmd->my_av, cmd->i))
 			return ;
 		if (cmd->pipe_flag == 0)
 			get_utils(cmd->my_av, envp);
 		else
 			pipe_maker(cmd->my_av, *envp);
-		if (buf[i] == SEMICOLON || buf[i] == 0)
-		{
-			dup2(cmd->du_p0, 0);
-			dup2(cmd->du_p1, 1);
-		}
-		if (buf[i] == PIPE || buf[i] == SEMICOLON)
-			i++;
+		if (buf[cmd->i] == SEMICOLON || buf[cmd->i] == 0)
+			dup_and_close(cmd);
+		if (buf[cmd->i] == PIPE || buf[cmd->i] == SEMICOLON)
+			cmd->i++;
 		freeing_memory(&cmd->lst_s, &cmd->my_av);
-		free(cmd);
 	}
+	free(cmd);
 }

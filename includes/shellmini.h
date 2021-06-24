@@ -6,7 +6,7 @@
 /*   By: stune <stune@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/19 15:02:39 by stune             #+#    #+#             */
-/*   Updated: 2021/06/22 20:07:05 by stune            ###   ########.fr       */
+/*   Updated: 2021/06/24 18:02:46 by stune            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,7 @@ typedef struct s_cmd
 	int					pipe_flag;
 	int					du_p0;
 	int					du_p1;
+	int					i;
 }						t_cmd;
 
 t_all	*g_all;
@@ -119,7 +120,7 @@ void	term_right(t_term *term);
 void	check_flagc(void);
 void	sig_handler(int sig);
 int		check_errors(char *buf, char **my_av, int i);
-t_cmd	*cmd_init(void);
+t_cmd	*cmd_init(char *buf);
 void	make_key(char *buf, char **envp, int *i, char **tmp);
 int		if_redirect_in_buf(char *buf, int *i, char **tmp);
 void	if_quote(char *buf, char **envp, char **tmp, int *i);
@@ -127,5 +128,6 @@ void	dollar_sign_processing(char **envp, char *buf, int *i, char **tmp);
 void	if_apostrophe(char *buf, char **tmp, int *i);
 void	if_quo_back_apos_pip(char *buf, char **tmp, char **envp, int *i);
 void	norm_correct(char *buf, char **tmp, int *i);
+void	dup_and_close(t_cmd *cmd);
 
 #endif

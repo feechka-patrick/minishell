@@ -3,22 +3,26 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nmisfit <nmisfit@student.42.fr>            +#+  +:+       +#+        */
+/*   By: stune <stune@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/22 17:57:19 by stune             #+#    #+#             */
-/*   Updated: 2021/06/22 20:36:57 by nmisfit          ###   ########.fr       */
+/*   Updated: 2021/06/24 18:00:52 by stune            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shellmini.h"
 
-t_cmd	*cmd_init(void)
+t_cmd	*cmd_init(char *buf)
 {
 	t_cmd	*cmd;
 
 	cmd = malloc(sizeof(t_cmd));
-	cmd->du_p0 = dup(0);
-	cmd->du_p1 = dup(1);
+	cmd->i = 0;
+	if (*buf)
+	{
+		cmd->du_p0 = dup(0);
+		cmd->du_p1 = dup(1);
+	}
 	cmd->pipe_flag = 0;
 	cmd->lst_s.l_size = 0;
 	cmd->lst_s.lst_all = NULL;
@@ -28,9 +32,11 @@ t_cmd	*cmd_init(void)
 void	make_key(char *buf, char **envp, int *i, char **tmp)
 {
 	char	*dollar_tmp;
+	char	*save_tmp;
 	int		j;
 
 	j = 0;
+	save_tmp = *tmp;
 	dollar_tmp = NULL;
 	while (buf[*i] && buf[*i] != SPACE && buf[*i] != SEMICOLON \
 	&& buf[*i] != PIPE && buf[*i] != QUOTE && \
@@ -43,7 +49,10 @@ void	make_key(char *buf, char **envp, int *i, char **tmp)
 	while (envp[j])
 	{
 		if (!(ft_strncmp(envp[j], dollar_tmp, ft_strlen(dollar_tmp))))
+		{
 			*tmp = ft_strjoin(*tmp, get_value(envp[j]));
+			free(save_tmp);
+		}
 		j++;
 	}
 	free(dollar_tmp);
@@ -64,7 +73,7 @@ void	if_quote(char *buf, char **envp, char **tmp, int *i)
 			ft_strjchr(tmp, buf[*i]);
 			(*i)++;
 		}
-		if (buf[*i] != BACKSLASH && buf[*i] != QUOTE && buf[*i] != DOLLAR)
+		if (buf[*i] != BACKSLASH && buf[*i] != QUOTE)
 		{
 			ft_strjchr(tmp, buf[*i]);
 			(*i)++;
