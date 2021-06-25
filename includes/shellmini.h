@@ -6,7 +6,7 @@
 /*   By: nmisfit <nmisfit@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/19 15:02:39 by stune             #+#    #+#             */
-/*   Updated: 2021/06/25 18:37:01 by nmisfit          ###   ########.fr       */
+/*   Updated: 2021/06/25 19:35:23 by nmisfit          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,6 +108,7 @@ void	pipe_maker(char *argv[], char *envp[]);
 char	**check_redirect(char **argv, int *fd);
 void	strzero(char **str, int n);
 int		putchr(int c);
+void	term_remote_with_signal(void);
 void	term_init(void);
 void	term_remote(void);
 void	sgnl(int a);

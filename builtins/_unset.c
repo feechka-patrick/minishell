@@ -6,27 +6,11 @@
 /*   By: nmisfit <nmisfit@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/11 20:05:52 by nmisfit           #+#    #+#             */
-/*   Updated: 2021/06/25 18:34:54 by nmisfit          ###   ########.fr       */
+/*   Updated: 2021/06/25 18:52:11 by nmisfit          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shellmini.h"
-
-static int	check_argv(char *argv)
-{
-	int	i;
-
-	if (argv[0] >= '0' && argv[0] <= '9')
-		return (EXPORT_ARG_ERROR);
-	i = -1;
-	while (argv[++i])
-	{
-		if (!(ft_isdigit(argv[i]) || ft_isalpha(argv[i])
-				|| argv[i] == '_' || argv[i] == ';'))
-			return (EXPORT_ARG_ERROR);
-	}
-	return (OK);
-}
 
 void	run_unset(char **argv, char ***envp)
 {

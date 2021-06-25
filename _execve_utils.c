@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   _execve_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: stune <stune@student.42.fr>                +#+  +:+       +#+        */
+/*   By: nmisfit <nmisfit@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/22 14:12:30 by nmisfit           #+#    #+#             */
-/*   Updated: 2021/06/22 20:06:27 by stune            ###   ########.fr       */
+/*   Updated: 2021/06/25 19:33:49 by nmisfit          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,4 +54,16 @@ char	*getfntpath(char *name, char **envp)
 		}
 	}
 	return (name);
+}
+
+void	term_remote_with_signal(void)
+{
+	struct termios	term;
+
+	tcgetattr(0, &term);
+	term.c_lflag |= (ECHO);
+	term.c_lflag |= (ICANON);
+	tcsetattr(0, TCSANOW, &term);
+	signal(SIGINT, SIG_IGN);
+	signal(SIGQUIT, SIG_IGN);
 }

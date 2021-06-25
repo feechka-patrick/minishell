@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: stune <stune@student.42.fr>                +#+  +:+       +#+         #
+#    By: nmisfit <nmisfit@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/02/20 02:37:00 by stune             #+#    #+#              #
-#    Updated: 2021/06/23 21:17:01 by stune            ###   ########.fr        #
+#    Updated: 2021/06/25 18:46:00 by nmisfit          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,6 +24,7 @@ SRC =	main.c\
 		builtins/_unset.c\
 		builtins/_exit.c\
 		builtins/_cd.c\
+		builtins/checks_envar.c\
 		free_all_and_exit.c\
 		utils.c\
 		command_loop.c\
