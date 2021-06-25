@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   shellmini.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: stune <stune@student.42.fr>                +#+  +:+       +#+        */
+/*   By: nmisfit <nmisfit@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/19 15:02:39 by stune             #+#    #+#             */
-/*   Updated: 2021/06/24 18:02:46 by stune            ###   ########.fr       */
+/*   Updated: 2021/06/25 18:37:01 by nmisfit          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,8 @@ int		ft_strcmp(const char *s1, const char *s2);
 void	update_exit_status(char ***envp, int status);
 char	*getenvp(char *key, char **envp);
 char	*new_envparams(char *key, char *value);
-int		check_value(char *argv, char ***envp);
+int		check_key(char *argv);
+int		check_value(char *argv);
 void	add_envp(char *value, char ***envp);
 char	*get_key(char *str);
 char	*get_value(char *str);

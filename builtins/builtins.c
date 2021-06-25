@@ -6,7 +6,7 @@
 /*   By: nmisfit <nmisfit@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/07 14:25:32 by nmisfit           #+#    #+#             */
-/*   Updated: 2021/06/22 13:03:25 by nmisfit          ###   ########.fr       */
+/*   Updated: 2021/06/25 15:25:58 by nmisfit          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,13 +39,21 @@ void	get_path_up(char **path)
 
 void	run_env(char **envp)
 {
-	int	i;
+	int		i;
+	char	*tmp;
+	char	*key;
 
 	i = -1;
 	while (envp[++i])
 	{
-		write(1, envp[i], ft_strlen(envp[i]));
-		write(1, "\n", 1);
+		tmp = get_value(envp[i]);
+		key = get_key(envp[i]);
+		if (tmp && ft_strcmp(key, "?"))
+		{
+			write(1, envp[i], ft_strlen(envp[i]));
+			write(1, "\n", 1);
+		}
+		free(key);
 	}
 }
 

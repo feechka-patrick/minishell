@@ -6,7 +6,7 @@
 /*   By: nmisfit <nmisfit@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/17 16:07:58 by nmisfit           #+#    #+#             */
-/*   Updated: 2021/06/22 13:15:17 by nmisfit          ###   ########.fr       */
+/*   Updated: 2021/06/25 18:24:13 by nmisfit          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ void	update_value(char **value, char **tmp, char **env, char **key)
 	free(*tmp);
 }
 
-int	check_value(char *argv, char ***envp)
+static int	find_var(char *argv, char ***envp)
 {
 	int		i;
 	char	*key;
@@ -80,7 +80,7 @@ void	add_envp(char *value, char ***envp)
 	char	**tmp;
 	int		i;
 
-	if (check_value(value, envp) == OK)
+	if (find_var(value, envp) == OK)
 		return ;
 	i = 0;
 	while ((*envp)[i])

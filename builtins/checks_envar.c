@@ -1,57 +1,45 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   _unset.c                                           :+:      :+:    :+:   */
+/*   checks_envar.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nmisfit <nmisfit@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/06/11 20:05:52 by nmisfit           #+#    #+#             */
-/*   Updated: 2021/06/25 18:34:54 by nmisfit          ###   ########.fr       */
+/*   Created: 2021/06/25 18:38:55 by nmisfit           #+#    #+#             */
+/*   Updated: 2021/06/25 18:40:13 by nmisfit          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shellmini.h"
 
-static int	check_argv(char *argv)
+int	check_key(char *argv)
 {
 	int	i;
 
-	if (argv[0] >= '0' && argv[0] <= '9')
+	if (ft_isdigit(argv[0]))
 		return (EXPORT_ARG_ERROR);
 	i = -1;
-	while (argv[++i])
+	while (argv[++i] && argv[i] != '=')
 	{
 		if (!(ft_isdigit(argv[i]) || ft_isalpha(argv[i])
-				|| argv[i] == '_' || argv[i] == ';'))
+				|| argv[i] == '_'))
 			return (EXPORT_ARG_ERROR);
 	}
 	return (OK);
 }
 
-void	run_unset(char **argv, char ***envp)
+int	check_value(char *argv)
 {
-	char	*tmp;
+	char	*value;
 	int		i;
-	int		j;
-	int		k;
 
-	k = 0;
-	while (argv[++k])
+	value = get_value(argv);
+	i = -1;
+	while (value && value[++i])
 	{
-		if (check_key(argv[k]) != OK)
-			errors_output(EXPORT_ARG_ERROR, argv[k]);
-		i = -1;
-		while ((*envp)[++i])
-		{
-			tmp = get_key((*envp)[i]);
-			if (!ft_strcmp(argv[k], tmp))
-			{
-				free((*envp)[i]);
-				j = i - 1;
-				while ((*envp)[++j])
-					(*envp)[j] = (*envp)[j + 1];
-			}
-			free(tmp);
-		}
+		if (!((value[i] >= 32 && value[i] <= 126)
+				|| (value[i] >= 7 && value[i] <= 13)))
+			return (EXPORT_ARG_ERROR);
 	}
+	return (OK);
 }

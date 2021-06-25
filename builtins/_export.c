@@ -6,7 +6,7 @@
 /*   By: nmisfit <nmisfit@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/10 18:12:27 by nmisfit           #+#    #+#             */
-/*   Updated: 2021/06/22 13:16:38 by nmisfit          ###   ########.fr       */
+/*   Updated: 2021/06/25 18:39:21 by nmisfit          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,25 +68,9 @@ static void	sort_envp(char ***envp)
 
 static int	check_argv(char *argv)
 {
-	int	i;
-
-	if (ft_isdigit(argv[0]))
+	if (check_key(argv) == EXPORT_ARG_ERROR
+		|| check_value(argv) == EXPORT_ARG_ERROR)
 		return (EXPORT_ARG_ERROR);
-	i = -1;
-	while (argv[++i])
-	{
-		if (!((ft_isdigit(argv[i]) || ft_isalpha(argv[i])
-					|| argv[i] == '_' || argv[i] == '=' || argv[i] == ';'
-					|| argv[i] == '/')))
-			return (EXPORT_ARG_ERROR);
-		if (argv[i] == '=' && i == 0)
-		{
-			while (argv[i] && argv[i] == '=')
-				i++;
-			if (!argv[i])
-				return (EXPORT_ARG_ERROR);
-		}
-	}
 	return (OK);
 }
 
@@ -123,7 +107,8 @@ void	run_export(char **argv, char ***envp)
 	{
 		if (check_argv(argv[i]) != OK)
 			errors_output(EXPORT_ARG_ERROR, argv[i]);
-		add_envp(argv[i], envp);
+		else
+			add_envp(argv[i], envp);
 	}
 	sort_envp(envp);
 }
